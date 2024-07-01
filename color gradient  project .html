@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="x-icon" href="images.jpeg">
+    <title>Color Gradient Generator</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+    }
+
+    .container {
+
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(rgb(233 227 39), rgb(204 26 64));
+    }
+
+    #butn1 {
+        height: 35px;
+        width: 80px;
+        margin: 15px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    #butn2 {
+        height: 35px;
+        width: 80px;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    .copysection {
+        height: 65px;
+        width: 280px;
+        padding-left: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        opacity: 0.6;
+        border-left: 2px solid white;
+        font-weight: 500;
+        font-family: 'Times New Roman', Times, serif;
+        align-content: center;
+
+
+    }
+</style>
+
+<body>
+    <section class="container">
+        <h1>Color Gradient Generator</h1>
+        <div class="btnbtn">
+            <button id="butn1">#E9E327</button>
+            <button id="butn2">#CC1A40</button>
+        </div>
+
+        <h3>Copy your code here</h3>
+        <div class="copysection">
+            <p>background-color: linear-gradient(to right,<br>(rgb(233 227 39) ,rgb(204 26 64));</p>
+
+        </div>
+    </section>
+    <script>
+        let contAiner = document.querySelector(".container");
+        let firstbtn = document.getElementById("butn1");
+        let secondbtn = document.getElementById("butn2");
+        let copysec = document.querySelector(".copysection");
+        var rgb1 = "#E9E327";
+        var rgb2 = "#CC1A40";
+        firstbtn.style.background = "#E9E327";
+        secondbtn.style.background = "#CC1A40";
+        contAiner.style.backgroundImage = `linear-gradient(to right, ${rgb1},${rgb2})`;
+
+        let btnfun = () => {
+            let Hexelem = "0123456789abcdef";//initilize hexadecimal value 
+            let colour = "#";
+            for (let i = 0; i < 6; i++) {//lopp to generaye hexa code
+                colour = colour + Hexelem[Math.floor(Math.random() * 16)];
+
+            }
+            return colour;
+        };
+        let handlebtn1 = () => {
+            rgb1 = btnfun();//var initilize up.....
+            console.log(rgb1);
+            firstbtn.style.backgroundColor = `${rgb1}`;
+            contAiner.style.backgroundImage = `linear-gradient(to right, ${rgb1},${rgb2})`;
+            firstbtn.textContent = `${rgb1}`;
+            copysec.innerHTML = `background-color: linear-gradient(to right,${rgb1},rgb${rgb2});`;
+
+        };
+        let handlebtn2 = () => {
+            rgb2 = btnfun();
+            console.log(rgb2);
+            secondbtn.style.backgroundColor = `${rgb2}`;
+            contAiner.style.backgroundImage = `linear-gradient(to right, ${rgb1},${rgb2})`;
+            secondbtn.textContent = `${rgb2}`;
+            copysec.innerHTML = `background-color: linear-gradient(to right,${rgb1},${rgb2});`;
+
+        };
+        copysec.addEventListener("click", () => {
+            navigator.clipboard.writeText(copysec.innerText);
+        });
+        firstbtn.addEventListener("click", handlebtn1);
+        secondbtn.addEventListener("click", handlebtn2);
+
+
+    </script>
+</body>
+
+</html
