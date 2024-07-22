@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO APP</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: black;
+      color: white;
+    }
+    .parent {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #inputtag {
+      border: 2px rgb(0, 251, 255) solid;
+      height: 27px;
+      width: 40%;
+      color: black;
+    }
+    .child {
+      width: 42rem;
+      padding-left: 2%;
+      margin-left: 18%;
+    }
+    button {
+      border-top-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      border-top-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+      height: 40px;
+      width: 15%;
+      border: 0.5px solid aqua;
+      background-color: aqua;
+      color: black;
+      transition: all 0.5 linear;
+    }
+    button:hover {
+      box-shadow: inset 0 0 0 0.2rem aqua;
+      background-color: transparent;
+      color: white;
+    }
+    li {
+      list-style-type: disc;
+      font-weight: 500;
+      display: inline;
+      cursor: pointer;
+    }
+    .mainlistdiv {
+      width: 29rem;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      align-items: center;
+      height: auto;
+
+    }
+
+    .deletebtn {
+      margin-top: 1%;
+      width: 100px;
+    }
+  </style>
+  <body>
+    <div class="parent">
+      <div class="child">
+        <h1>Todo App</h1>
+        <input type="text" id="inputtag" />
+        <button id="btn">Add Todo</button>
+        <section class="listdiv"></section>
+      </div>
+      <!-- divlist -->
+      
+    </div>
+  </body>
+  <script>
+    let inputtag = document.getElementById("inputtag");
+    let getbtn = document.getElementById("btn");
+    let divlist = document.querySelector(".listdiv");
+    let a_Array = [];
+    let getTodolistfromlocal = () => {
+      return JSON.parse(localStorage.getItem("TodoSetData"));
+    };
+    const addtoListLocalstorage = (toAppdaata) => {
+      return localStorage.setItem("TodoSetData", JSON.stringify(toAppdaata));
+    };
+    toAppdaata = getTodolistfromlocal() || [];
+
+    let showtododynamically = (currelem) => {
+      let divelement = document.createElement("div");
+      divelement.classList.add("mainlistdiv");
+      divelement.innerHTML = `<li>${currelem}<\li><button class="deletebtn">Delete</button>`;
+      divlist.append(divelement);
+    };
+    let addtodofun = () => {
+      let toAppdaata = inputtag.value.trim();
+      inputtag.value = " ";
+      if (a_Array !== " " && !a_Array.includes(toAppdaata)) {
+        a_Array.push(toAppdaata);
+        a_Array = [...new Set(a_Array)]; //for store unique dat order is not important uniquness is aproority
+        console.log(a_Array);
+        localStorage.setItem("TodoSetData", JSON.stringify(a_Array));
+        showtododynamically(toAppdaata);
+      }
+    };
+    const showTododata = () => {
+      console.log(toAppdaata);
+      toAppdaata.forEach((currelem) => {
+        showtododynamically(currelem); //show on  display scrren
+      });
+    };
+    showTododata();
+    //delete button in list
+
+    let deletetodoelem = (event) => {
+      const removeTodolist = event.target;
+      let totolistcontent = removeTodolist.previousElementsSibling.innerText;
+      let parentElem = removeTodolist.parentElem;
+      console.log(totolistcontent);
+
+      totolistcontent = totolistcontent.filter((currelem) => {
+        return currelem !== totolistcontent.toLowerCase();
+      });
+
+      addtoListLocalstorage(totolistcontent);
+      parentElem.remove();
+      console.log(totolistcontent);
+    };
+    divlist.addEventListener("click", (event) => {
+      console.log(event.target);
+      if (event.target.classList.contains("deletebtn")) {
+        deletetodoelem(event);
+      }
+    });
+
+    getbtn.addEventListener("click", () => {
+      addtodofun();
+    });
+  </script>
+</html>
