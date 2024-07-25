@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      /* font:  200 50px "Inter",sans-serif; */
+    }
+    .parent {
+      height: 100vh;
+      width: 100%;
+      background-color: #adbbda;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .child {
+      height: 28rem;
+      width: 26rem;
+      background-image: linear-gradient(#ede8ed, #ede8ed);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid rgb(206, 201, 201);
+      box-shadow: #3d52a0 4px 4px 4px;
+    }
+    .counterdiv {
+      position: fixed;
+      top: 7rem;
+      margin-bottom: 2rem;
+      font-size: 3.5rem;
+      cursor: pointer;
+    }
+    .btndiv {
+      position: fixed;
+      top: 13.4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .contantdiv {
+      position: fixed;
+      top: 22.2rem;
+      margin-bottom: 5rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .btn {
+      border-radius: 20px;
+      height: 40px;
+      width: 7rem;
+      margin-left: 2rem;
+      margin-right: 2rem;
+      margin-bottom: 0.5rem;
+      background-color: #adbbda;
+      border: 0.5px solid linear-gradient(#8697c4, #8697c4);
+      /* background-image: linear-gradient(#00B4DB, #0083B0); */
+      color: black;
+      transition: all 0.5 linear;
+    }
+    .btn:hover {
+      background-color: #adbbda;
+      color: rgb(255, 252, 252);
+    }
+  </style>
+  <body>
+    <div class="parent">
+      <h1>Counter</h1>
+      <div class="child">
+        <div class="counterdiv">0</div>
+        <div class="btndiv">
+          <button class="btn btn1">Start</button>
+          <button class="btn btn2">Reset</button>
+          <button class="btn btn3">Stop</button>
+          <button class="btn btn4">getTime</button>
+          <button class="btn btn5">ClearTime</button>
+        </div>
+        <div class="contantdiv"></div>
+      </div>
+    </div>
+    <script>
+      let CounteRdiv = document.querySelector(".counterdiv");
+      let Start = document.querySelector(".btn1");
+      let Reset = document.querySelector(".btn2");
+      let Stop = document.querySelector(".btn3");
+      let getTime = document.querySelector(".btn4");
+      let ClearTime = document.querySelector(".btn5");
+      let contanTdiv = document.querySelector(".contantdiv");
+      //initilaize by 0 for iterateration
+      //Globally
+      let counter = 0;
+      //initilize start buttob value globally
+      let Startintervalid;
+      //Start fun
+      Startfun = () => {
+        Startintervalid = setInterval(() => {
+          // Start Button value
+          counter = counter + 1;
+          CounteRdiv.innerText = `${counter}`;
+          //counter start and increase every second
+        }, 1000);
+      };
+      //Start Button  Click Event
+      Start.addEventListener("click", () => {
+        Startfun();
+      });
+      //Resetfun
+      ResetFun = () => {
+        //reset counter
+        CounteRdiv.innerText = `0`;
+        // stop start counter
+        clearInterval(Startintervalid);
+        // again start with 0
+        counter = 0;
+        contanTdiv.innerText = " ";
+      };
+      //Reset Button  Click Event
+      Reset.addEventListener("click", () => {
+        ResetFun();
+      });
+      //Stop fun
+      Stopfun = () => {
+        // Stop start function on its current value
+        clearInterval(Startintervalid);
+        contanTdiv.innerText = `Counter stop Time is ${counter} `;
+      };
+      //Start Button  Click Event
+      Stop.addEventListener("click", () => {
+        Stopfun();
+      });
+      //Gettime fun
+      GettimeFun = () => {
+        let newpara = document.createElement("p");
+        newpara.innerText = `Counter get time is  ${counter} `;
+        contanTdiv.append(newpara);
+      };
+      //Gettime click Event
+      getTime.addEventListener("click", () => {
+        GettimeFun();
+      });
+      //CLear Time Fun
+      clearTimeFun = () => {
+        contanTdiv.innerText = " ";
+      };
+      //ClearTime Click event
+      ClearTime.addEventListener("click", () => {
+        clearTimeFun();
+      });
+    </script>
+  </body>
+</html>
